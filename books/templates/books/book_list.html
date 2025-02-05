@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5 pt-5"> <!-- Increased spacing -->
+    <h2 class="mb-4">📚 Available Books</h2>
+    <div class="row">
+        {% for book in books %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow-sm h-100 d-flex flex-row align-items-center p-3">
+                <!-- Book Cover Image -->
+                <img src="{{ book.cover_image }}" class="book-cover img-fluid" alt="{{ book.title }}">
+        
+                <!-- Book Details -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">by <strong>{{ book.author }}</strong></p>
+                    <p class="text-success"><strong>${{ book.price }}</strong></p>
+                    <a href="{% url 'book_detail' book.id %}" class="btn btn-sm btn-primary">📖 View Details</a>
+                </div>
+            </div>
+        </div>        
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

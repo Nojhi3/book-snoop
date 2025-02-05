@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: bookstore_db
+    restart: always
+    environment:
+      POSTGRES_DB: bookstore_db
+      POSTGRES_USER: bookstore_user
+      POSTGRES_PASSWORD: secure_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./bookstore_backup.sql:/docker-entrypoint-initdb.d/bookstore_backup.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookstore_user -d bookstore_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  bookstore_app:
+    build: .
+    container_name: bookstore_app
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PYTHONPATH: /app
+      DJANGO_SETTINGS_MODULE: book_store.settings
+      ADMIN_USERNAME: "admin"
+      ADMIN_EMAIL: "admin@example.com"
+      ADMIN_PASSWORD: "admin123"
+      DATABASE_URL: postgresql://bookstore_user:secure_password@db:5432/bookstore_db
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles  # Store collected static files
+    command: >
+      sh -c "
+      sleep 5 &&
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      python scripts/create_admin.py &&
+      python manage.py loaddata books/fixtures/data.json || true &&
+      gunicorn book_store.wsgi:application --bind 0.0.0.0:8000"
+      
+volumes:
+  postgres_data:
+  static_volume:
