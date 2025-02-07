@@ -108,9 +108,15 @@ LOGIN_URL = "login"  # ✅ Ensures users are redirected to login if needed
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
-}
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL)
+    }
+else:
+    print("WARNING: No DATABASE_URL environment variable set, using SQLite instead.")
 
 
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
