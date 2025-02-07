@@ -111,13 +111,12 @@ LOGIN_URL = "login"  # ✅ Ensures users are redirected to login if needed
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.config(default=DATABASE_URL)
-    }
-else:
-    print("WARNING: No DATABASE_URL environment variable set, using SQLite instead.")
+if not DATABASE_URL:
+    raise RuntimeError("🚨 DATABASE_URL is not set! Make sure it's configured in Railway.")
 
+DATABASES = {
+    'default': dj_database_url.config(default=DATABASE_URL)
+}
 
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@example.com")
