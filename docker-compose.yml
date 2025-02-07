@@ -1,5 +1,9 @@
 version: "3.8"
 
+networks:
+  djangonetwork:
+    driver: bridge
+
 services:
   db:
     image: postgres:latest
@@ -19,6 +23,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - djangonetwork
 
   bookstore_app:
     build: .
@@ -27,6 +33,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    links:
+      - db:db
     environment:
       PYTHONPATH: /app
       DJANGO_SETTINGS_MODULE: book_store.settings
@@ -48,7 +56,9 @@ services:
       python scripts/create_admin.py &&
       python manage.py loaddata books/fixtures/data.json || true &&
       gunicorn book_store.wsgi:application --bind 0.0.0.0:8000"
-      
+    networks:
+      - djangonetwork
+
 volumes:
   postgres_data:
   static_volume:
