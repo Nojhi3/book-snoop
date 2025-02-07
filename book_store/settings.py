@@ -38,8 +38,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your_email@gmail.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'your_email_password'  # Use an app password if using Gmail
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'book_store.settings')
-django.setup()
 # Application definition
 
 INSTALLED_APPS = [
