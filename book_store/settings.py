@@ -109,10 +109,7 @@ LOGIN_URL = "login"  # ✅ Ensures users are redirected to login if needed
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL", "postgresql://bookstore_user:secure_password@db:5432/bookstore_db"),
-        conn_max_age=600
-    )
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
 
