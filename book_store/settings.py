@@ -63,6 +63,13 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://book-snoop-production.up.railway.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+
+
 ROOT_URLCONF = 'book_store.urls'
 
 TEMPLATES = [
