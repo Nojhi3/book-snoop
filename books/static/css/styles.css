@@ -9,6 +9,9 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
+.navbar {
+    z-index: 10;
+}
 
 .book-cover {
     width: 100px;  
@@ -30,7 +33,7 @@ html, body {
 }
 
 .hero-section {
-    flex: 1;
+    height: 100vh;
     background: url('../images/library.jpg') no-repeat center center/cover;
     position: relative;
     display: flex;
