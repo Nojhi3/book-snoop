@@ -3,9 +3,11 @@ html, body {
     padding: 0;
     width: 100vw;
     height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    background-color:rgba(140, 140, 140, 0.31);
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);  /* Soft gray gradient */
+    font-family: 'Arial', sans-serif;
 }
+
 
 .book-cover {
     width: 100px;  /* Reduce width */
@@ -27,7 +29,7 @@ html, body {
 }
 
 .hero-section {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -37,7 +39,7 @@ html, body {
 }
 
 .overlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -54,5 +56,8 @@ html, body {
     z-index: 1; /* Ensures content stays above the background */
 }
 
-
+.text-center {
+    position: relative;
+    z-index: 2;  /* Bring the text and button above the overlay */
+}
 

@@ -10,7 +10,7 @@ from books.models import User
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Book, Category, Review, Order, OrderItem
 from .serializers import UserSerializer, BookSerializer, CategorySerializer, ReviewSerializer, OrderSerializer, OrderItemSerializer, RegisterSerializer
@@ -18,7 +18,7 @@ from .permissions import IsAdminUser
 from .cart import Cart
 from .forms import CheckoutForm, CustomUserCreationForm
 
-
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_view(request):
@@ -28,6 +28,8 @@ def register_view(request):
         return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def login_view(request):
@@ -40,7 +42,8 @@ def login_view(request):
         return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
     return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
-# Logout View
+
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def logout_view(request):
@@ -62,6 +65,7 @@ def book_detail_view(request, book_id):
 
     return render(request, "books/book_detail.html", {"book": book, "reviews": reviews})
 
+@csrf_exempt
 def register_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -73,6 +77,7 @@ def register_view(request):
     
     return render(request, "auth/register.html", {"form": form})
 
+@csrf_exempt
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
@@ -86,6 +91,7 @@ def login_view(request):
 
     return render(request, "auth/login.html", {"form": form})
 
+@csrf_exempt
 @require_POST  # 🔹 Only allow POST requests for security
 def logout_view(request):
     """Logs out the user and redirects to the homepage."""
@@ -128,6 +134,7 @@ def clear_cart(request):
     cart.clear()
     return redirect("cart_detail")
 
+@csrf_exempt
 @login_required(login_url="login")  
 def checkout_view(request):
     """Handle checkout process"""
