@@ -20,17 +20,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'book_list' %}">📖 Books</a></li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
-                                {% csrf_token %}
-                            </form>
-                            <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();">
-                                🚪 Logout
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'cart_detail' %}">🛒 Cart</a>
-                        </li>                    
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();">🚪 Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cart_detail' %}">🛒 Cart</a></li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">🔑 Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">📝 Register</a></li>
@@ -39,35 +30,29 @@
             </div>
         </div>
     </nav>
-    
 
-<!-- Flash Messages -->
-<div class="container mt-3">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<main>
-    {% block content %}{% endblock %}
-</main>
-
-
-<footer class="bg-dark text-white text-center">
-    <div class="container">
-        <p class="mb-0">&copy; 2024 Book-Snoop. All rights reserved.</p>
-        <small>Follow us on 
-            <a href="https://x.com/" class="text-white text-decoration-none">X</a>, 
-            <a href="https://www.facebook.com/" class="text-white text-decoration-none">Facebook</a>, 
-            <a href="https://www.instagram.com/" class="text-white text-decoration-none">Instagram</a>
-        </small>
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
-</footer>
+
+    <!-- Main content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Book-Snoop. All rights reserved.</p>
+        <small>Follow us on <a href="#" class="text-light">X</a>, <a href="#" class="text-light">Facebook</a>, <a href="#" class="text-light">Instagram</a></small>
+    </footer>
 
 
 <!-- Bootstrap JS -->
