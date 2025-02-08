@@ -31,8 +31,8 @@ html, body {
 }
 
 .hero-section {
-    flex: 1; /* Fills available space */
-    background: url('{% static "images/library.jpg" %}') no-repeat center center/cover;
+    flex: 1;
+    background: url('../images/library.jpg') no-repeat center center/cover;
     position: relative;
     display: flex;
     justify-content: center;
@@ -40,6 +40,7 @@ html, body {
     text-align: center;
     color: white;
 }
+
 
 .overlay {
     position: absolute;
@@ -57,12 +58,15 @@ html, body {
 }
 
 footer {
-    background-color: #343a40; /* Dark footer */
+    background-color: #343a40;
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: relative;
-    bottom: 0;
+    margin: 0; /* Remove any default margin */
     width: 100%;
+}
+
+.container {
+    margin: 0; /* Ensure no margin is added by container */
 }
 
